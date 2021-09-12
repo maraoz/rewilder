@@ -2,9 +2,7 @@
 
     'use strict';
 
-	/*------------------------------------
-    countdown
-	--------------------------------------*/
+	// countdown
 	if (jQuery("[data-countdown]").length > 0) {
 		$('[data-countdown]').each(function () {
 			var $this = $(this);
@@ -22,9 +20,14 @@
 		if ($(e.target).closest('a').length) {
 			return;
 		}
-		$(this).children('.accordion-head').toggleClass("active").next().slideToggle().siblings().children('.accordion-head').removeClass('.active');
+		$(this).children('.accordion-head')	.toggleClass("active").next().slideToggle()
+			.siblings().children('.accordion-head').removeClass('.active');
     });
 	
+	// faq auto-open
+	var hash = window.location.hash.substr(1);
+	$("#"+hash).children('.accordion-head')	.toggleClass("active").next().slideToggle()
+	.siblings().children('.accordion-head').removeClass('.active');
 
 })(jQuery);
 
