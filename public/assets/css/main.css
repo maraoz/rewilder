@@ -1341,11 +1341,7 @@ svg {
   .hero-v1-content .range-value { margin-top: 1rem; }
 
   .description-area { padding: 20px; }
-  
-  .donation {
-    padding: 1.5rem;
-    width: 100%;
-  }
+
   .donation-message .main-shape { max-width: 55px; }
   .donation-message h4 { margin-top: 15px; }
 }
@@ -1357,12 +1353,26 @@ svg {
 @media screen and (max-width: 991px) {
   .donation-message h4 { font-size: 18px;}
   .description-wrapper { flex-direction: column;}
-  .donation {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 50px;
-  }
+  
   .logo {  margin-right: auto; }
   .logo img { height: 1.25rem; }
+
+  /* Donation page */
+  .donation {
+    width: 100%;
+    margin-top: 3rem;
+    padding: 1.5rem;
+  }
+  .donation .stamp {
+    top: 1.5rem;
+    right: 1.5rem;
+    max-width: 5rem;
+  }
+  .donation .info-container .flex { 
+    flex-direction: column;
+    padding-bottom: 0;
+  }
+  .donation .info-container .flex .donation-info {
+    margin: 0 0 1.5rem;
+  }
 }
