@@ -915,12 +915,19 @@ label {
 }
 
 .description-wrapper .nft {
-  flex: 1 1 0;
-  text-align: center;
   display: flex;
   flex-direction: column;
-  flex-basis: auto;
-  justify-content: space-evenly;
+  align-items: center;
+  justify-content: space-around;
+  flex-grow: 1;
+  padding-bottom: 2rem;
+}
+.description-wrapper .nft figcaption {
+  font-family: "Airbnb Cereal App Book";
+  font-size: 1rem;
+  text-align: center;
+  color: #D4CFC7;
+  max-width: 20rem;
 }
 
 .description-wrapper .nft .thumb {
