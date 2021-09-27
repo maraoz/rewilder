@@ -908,6 +908,8 @@ label {
 
 .description-area {
   padding: 2.75rem 2.5rem 0;
+  max-width: 84rem;
+  margin: auto;
 }
 
 .description-wrapper {
@@ -949,6 +951,7 @@ label {
   position: relative;
   display: flex;
   flex-direction: column;
+  margin-left: 1rem;
 }
 
 /* donation header */
@@ -1351,7 +1354,10 @@ svg {
 }
 
 @media screen and (max-width: 1199px) {
-  .donation { width: 60%; }
+  .donation { 
+    width: 55%;
+    padding: 2rem;
+  }
 }
 
 @media screen and (max-width: 991px) {
@@ -1370,6 +1376,7 @@ svg {
     margin-top: 3rem;
     padding: 1.5rem;
     height: fit-content;
+    margin-left: 0;
   }
   .donation .stamp {
     top: 1.5rem;
