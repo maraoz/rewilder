@@ -78,107 +78,105 @@ function DonationPage() {
       <Head { ...{ title: data.name } } />
       <div className="noise"></div>    
       <div className="description-area">
-        <div className="container-fluid">
-          <div className="description-wrapper">
-            <div className="nft">
-              <div className="donation-logo">
-                <img src="/assets/img/logo/logo.svg" alt="logo"/>
-              </div>
-              <div className="thumb">
-                {!isLoading && <img src={imageSource} alt="nft"
-                  className={"nft-image"}/>
-                }
-                <img src="/assets/images/stamp.svg" height="446" width="390" alt="decorative stamp frame" className="frame"/>
-              </div>
-              <figcaption>“{attributes["flavor"]}”</figcaption>
+        <div className="description-wrapper">
+          <div className="nft">
+            <div className="donation-logo">
+              <img src="/assets/img/logo/logo.svg" alt="logo"/>
             </div>
+            <div className="thumb">
+              {!isLoading && <img src={imageSource} alt="nft"
+                className={"nft-image"}/>
+              }
+              <img src="/assets/images/stamp.svg" height="446" width="390" alt="decorative stamp frame" className="frame"/>
+            </div>
+            <figcaption>“{attributes["flavor"]}”</figcaption>
+          </div>
 
-            <div className="donation">
-              <div className="header">
-                <img src={isLoading?"/assets/img/shape/stamp.png":("/assets/img/shape/stamp-" + attributes.tier + ".svg")} alt={attributes.tier + " stamp"} className="stamp"/>
-                <div className="title">
-                  <span>Tier: {attributes.tier}</span>
-                  <h2>{data.name}</h2>
-                </div>
-                <div className="info-container">
-                  <div className="flex">
-                    <DonationInfo 
-                      icon={<img src="/assets/images/icon/donation.svg" alt="donation"/>}
-                      label="donation"
-                      data={attributes["amount"]}
-                      />
-                    <DonationInfo 
-                      icon={<img src="/assets/images/icon/rewilder-logo.svg" alt="rewilding"/>}
-                      label="rewilding"
-                      data="Location TBD"
-                      />
-                  </div>
+          <div className="donation">
+            <div className="header">
+              <img src={isLoading?"/assets/img/shape/stamp.png":("/assets/img/shape/stamp-" + attributes.tier + ".svg")} alt={attributes.tier + " stamp"} className="stamp"/>
+              <div className="title">
+                <span>Tier: {attributes.tier}</span>
+                <h2>{data.name}</h2>
+              </div>
+              <div className="info-container">
+                <div className="flex">
                   <DonationInfo 
-                    icon={<RewilderIdenticon size={24} account={attributes["donor"]} />}
-                    label="donor"
-                    data={attributes["donor"]}
+                    icon={<img src="/assets/images/icon/donation.svg" alt="donation"/>}
+                    label="donation"
+                    data={attributes["amount"]}
+                    />
+                  <DonationInfo 
+                    icon={<img src="/assets/images/icon/rewilder-logo.svg" alt="rewilding"/>}
+                    label="rewilding"
+                    data="Location TBD"
                     />
                 </div>
+                <DonationInfo 
+                  icon={<RewilderIdenticon size={24} account={attributes["donor"]} />}
+                  label="donor"
+                  data={attributes["donor"]}
+                  />
               </div>
-            
-              <h5>Updates</h5>
-              <div className="updates">
-                {/* synthetic updates */}
-                {
-                isDonor && !taxInfoDismissed &&
-                <DonationUpdate 
-                  icon="/assets/images/icon/info.svg"
-                  iconalt="info"
+            </div>
+          
+            <h5>Updates</h5>
+            <div className="updates">
+              {/* synthetic updates */}
+              {
+              isDonor && !taxInfoDismissed &&
+              <DonationUpdate 
+                icon="/assets/images/icon/info.svg"
+                iconalt="info"
+                date={creationDate}
+                message={
+                  <>
+                    If you want your donation to be 501(c)(3) tax deductible, send us an email to{" "}
+                    <a target="_blank" href="mailto:receipts@rewilder.xyz">receipts@rewilder.xyz</a>
+                  </>
+                }
+                isCloseable={true}
+                onClose={()=>{setTaxInfoDismissed(true)}}
+                />
+              }
+              {
+              isDonor && !futureUpdatesInfoDismissed &&
+              <DonationUpdate 
+                icon="/assets/images/icon/info.svg"
+                iconalt="info"
+                date={creationDate}
+                message="You will be able to see future updates about your donation here. For example, when we buy the land or make a payment."
+                linkText="Subscribe to also receive email notifications."
+                linkHref="https://rewilder.substack.com/subscribe"
+                isCloseable={true}
+                onClose={()=>{setFutureUpdatesInfoDismissed(true)}}
+                />
+              }
+              {/* real updates */}
+              { updateList && updateList.length > 0 && updateList.map((update) => (
+                update.type == 'creation' && 
+                  <DonationUpdate 
+                  key={update.timestamp}
+                  icon="/assets/images/icon/avatar-icon.svg"
+                  iconalt="creation"
                   date={creationDate}
                   message={
                     <>
-                      If you want your donation to be 501(c)(3) tax deductible, send us an email to{" "}
-                      <a target="_blank" href="mailto:receipts@rewilder.xyz">receipts@rewilder.xyz</a>
+                      {youText} donated {attributes["amount"]} {" "}
+                      <a href={getExplorerTransactionLink(update.info.txid, config.chainId)??"#"} target="_blank">
+                        <FontAwesomeIcon icon={faExternalLinkAlt} />
+                      </a> 
+                      {thanksText}
+                      <br />
+                      and minted {yourText} unique NFT donation receipt{" "}
+                      <a href={openseaURL} target="_blank">
+                        <FontAwesomeIcon className="icon-color" icon={faExternalLinkAlt} />
+                      </a>
                     </>
-                  }
-                  isCloseable={true}
-                  onClose={()=>{setTaxInfoDismissed(true)}}
-                  />
-                }
-                {
-                isDonor && !futureUpdatesInfoDismissed &&
-                <DonationUpdate 
-                  icon="/assets/images/icon/info.svg"
-                  iconalt="info"
-                  date={creationDate}
-                  message="You will be able to see future updates about your donation here. For example, when we buy the land or make a payment."
-                  linkText="Subscribe to also receive email notifications."
-                  linkHref="https://rewilder.substack.com/subscribe"
-                  isCloseable={true}
-                  onClose={()=>{setFutureUpdatesInfoDismissed(true)}}
-                  />
-                }
-                {/* real updates */}
-                { updateList && updateList.length > 0 && updateList.map((update) => (
-                  update.type == 'creation' && 
-                    <DonationUpdate 
-                    key={update.timestamp}
-                    icon="/assets/images/icon/avatar-icon.svg"
-                    iconalt="creation"
-                    date={creationDate}
-                    message={
-                      <>
-                        {youText} donated {attributes["amount"]} {" "}
-                        <a href={getExplorerTransactionLink(update.info.txid, config.chainId)??"#"} target="_blank">
-                          <FontAwesomeIcon icon={faExternalLinkAlt} />
-                        </a> 
-                        {thanksText}
-                        <br />
-                        and minted {yourText} unique NFT donation receipt{" "}
-                        <a href={openseaURL} target="_blank">
-                          <FontAwesomeIcon className="icon-color" icon={faExternalLinkAlt} />
-                        </a>
-                      </>
-                    }>
-                    </DonationUpdate>
-                  ))
-                }
-              </div>
+                  }>
+                  </DonationUpdate>
+                ))
+              }
             </div>
           </div>
         </div>

@@ -925,6 +925,9 @@ label {
 
 .description-wrapper .nft .thumb {
   margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* DONATION CARD */
@@ -1175,6 +1178,11 @@ svg {
     padding: 2rem 0px;
     width: 100%;
   }
+  img.nft-image {
+    width: calc(100% - 3rem);
+    height: auto;
+    padding: 1rem;
+  }
   .donation .donation-update {
     flex-direction: column;
   }
@@ -1342,20 +1350,19 @@ svg {
   .donation-message h4 { margin-top: 15px; }
 }
 
+/* @media screen and (max-width: 1199px) {
+  .donation { width: 60%; }
+} */
 
 @media screen and (max-width: 991px) {
   .donation-message h4 { font-size: 18px;}
   .description-wrapper { flex-direction: column;}
   .donation {
-    width: 90%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 50px;
   }
   .logo {  margin-right: auto; }
   .logo img { height: 1.25rem; }
-}
-
-@media screen and (max-width: 1199px) {
-  .donation { width: 60%; }
 }
