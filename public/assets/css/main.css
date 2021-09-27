@@ -970,13 +970,12 @@ label {
 .donation .title h2 {
   color: #fff;
   font-family: "Airbnb Cereal App Black";
-  font-style: normal;
-  font-weight: 900;
-  font-size: 32px;
+  font-size: 2rem;
   line-height: 42px;
   margin: 0;
   padding: 0;
-  margin-top: 8px;
+  margin-top: .5rem;
+  max-width: 80%;
 }
 .donation .info-container {
   padding: 2rem 0;
