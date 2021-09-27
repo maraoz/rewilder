@@ -988,14 +988,14 @@ label {
   margin-right: 0;
 }
 .donation-info .donation-img {
-  width: 40px;
-  height: 40px;
+  width: 2.75rem;
+  height: 2.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #1B201C;
   border-radius: 50%;
-  margin-right: 12px;
+  margin-right: .75rem;
 }
 .donation-info span {
   font-size: 12px;
@@ -1006,13 +1006,12 @@ label {
   display: block;
 }
 .donation-info h4 {
-  font-size: 18px;
-  line-height: 23px;
+  font-size: 1.15rem;
   font-family: "Airbnb Cereal App Bold";
   color: #FAF8F6;
   margin: 0;
   padding: 0;
-  margin-top: 3px;
+  margin-top: .25rem;
 }
 
 /* donation updates */
@@ -1169,45 +1168,43 @@ svg {
 
 @media screen and (max-width: 575px) {
   .description-area { padding: 0px; }
-  .donation .shape {
-    top: 10px;
-    right: 10px;
-    max-width: 60px;
-  }
-  .donation {
-    padding: 2rem 0px;
-    width: 100%;
-  }
+  
+  /* Donation NFT img */
   img.nft-image {
     width: calc(100% - 3rem);
     height: auto;
     padding: 1rem;
   }
-  .donation .donation-update {
-    flex-direction: column;
+
+  /* Donation card header */
+  .donation-info .donation-img {
+    width: 3rem;
+    height: 3rem;
   }
-  .donation .donation-update h4 {
+  .donation .title span,
+  .donation-info span {
     font-size: 1rem;
-    line-height: 20px;
-    margin-top: 3px;
   }
-  .donation .donation-update .update-icon {
-    margin-right: 0;
-    margin-bottom: 6px;
+  .donation-info h4 {
+    font-size: 1.5rem;
   }
-  .donation .top-option .donation-update {
-    margin-right: 50px;
-  }
+
+  /* Donation updates */
   .update-card {
-    flex-direction: column;
-    padding: 15px;
+    padding: .75rem;
   }
   .update-card .update-icon {
-    position: unset;
-    margin-bottom: 6px;
+    min-width: 2.5rem;
+    margin-right: .75rem;
   }
   .update-card .update-content {
-    padding-left: 0;
+    padding: .25rem 0 0;
+    width: 100%;
+  }
+  .update-card .update-content p,
+  .update-card .update-content a,
+  .update-card .update-content span {
+    font-size: 1rem;
   }
 
   /* XXXXXXXXX */
@@ -1346,9 +1343,9 @@ svg {
   .donation-message h4 { margin-top: 15px; }
 }
 
-/* @media screen and (max-width: 1199px) {
+@media screen and (max-width: 1199px) {
   .donation { width: 60%; }
-} */
+}
 
 @media screen and (max-width: 991px) {
   .donation-message h4 { font-size: 18px;}
@@ -1362,6 +1359,7 @@ svg {
     width: 100%;
     margin-top: 3rem;
     padding: 1.5rem;
+    height: fit-content;
   }
   .donation .stamp {
     top: 1.5rem;
@@ -1372,7 +1370,6 @@ svg {
     flex-direction: column;
     padding-bottom: 0;
   }
-  .donation .info-container .flex .donation-info {
-    margin: 0 0 1.5rem;
-  }
+  .donation .info-container .flex .donation-info { margin: 0 0 1.75rem; }
+  .update-card:last-child { margin-bottom: 0; }
 }
