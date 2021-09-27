@@ -180,7 +180,11 @@ function DonationPage() {
             </div>
           </div>
         </div>
+        <div className="footer text-center donation-page">
+          <p>© Rewilder Foundation, Inc.  -  Terms of use  -  Privacy</p>
+        </div>
       </div>
+      
     </>
   );
 }

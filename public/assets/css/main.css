@@ -540,13 +540,14 @@ label {
 }
 
 .footer {
-  padding: 20px 0px;
-  margin-bottom: auto;
-}
-.footer p {
+  padding-bottom: 1rem;
   color: #3F6947;
   font-size: 14px;
-  line-height: 18px;
+  line-height: 1;
+  opacity: .7;
+}
+.footer.donation-page {
+  width: calc(100% - 42rem);
 }
 
 .connect-wallet-popup {
@@ -906,7 +907,7 @@ label {
 }
 
 .description-area {
-  padding: 40px;
+  padding: 2.75rem 2.5rem 0;
 }
 
 .description-wrapper {
@@ -920,7 +921,7 @@ label {
   align-items: center;
   justify-content: space-around;
   flex-grow: 1;
-  padding-bottom: 2rem;
+  padding-bottom: 3rem;
 }
 .description-wrapper .nft figcaption {
   font-family: "Airbnb Cereal App Book";
@@ -1362,6 +1363,9 @@ svg {
   .logo img { height: 1.25rem; }
 
   /* Donation page */
+  .description-wrapper .nft {
+    padding-bottom: 1rem;
+  }
   .donation {
     width: 100%;
     margin-top: 3rem;
@@ -1379,4 +1383,10 @@ svg {
   }
   .donation .info-container .flex .donation-info { margin: 0 0 1.75rem; }
   .update-card:last-child { margin-bottom: 0; }
+
+  /* Footer */
+  .footer.donation-page {
+    width: 100%;
+    padding-top: 2rem;
+  }
 }
