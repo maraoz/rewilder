@@ -115,7 +115,9 @@ function DonationPage() {
                 <DonationInfo 
                   icon={<RewilderIdenticon size={24} account={attributes["donor"]} />}
                   label="donor"
-                  data={attributes["donor"]}
+                  // FIX: use ellipsis instead of full address on mobile
+                  // data={attributes["donor"]}
+                  data={youText}
                   />
               </div>
             </div>
