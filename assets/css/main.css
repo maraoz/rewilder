@@ -1517,4 +1517,37 @@ label {
   }
 }
 
+.hero-main {
+  display: flex;
+  flex-direction: column;
+  top: 50%;
+}
+.btn-theme {
+  margin: 4rem 5rem;
+  --tw-shadow: 0 0 10px #000!important;
+  font-size: 14px;
+  font-family: "Airbnb Cereal App Bold";
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(89.18deg, #3F6947 0%, #339645 100%);
+  border-radius: 8px;
+  padding: 10px 24px;
+  line-height: 21px;
+  z-index: 1;
+  letter-spacing: 0.7px;
+}
+a.btn-theme {
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+.btn-theme:hover {
+  color: #fff;
+  opacity: 90%;
+}
+.btn-theme:hover::before {
+  opacity: 1;
+}
+
 /*# sourceMappingURL=main.css.map */
