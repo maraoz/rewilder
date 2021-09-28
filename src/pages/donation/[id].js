@@ -87,7 +87,7 @@ function DonationPage() {
               {!isLoading && <img src={imageSource} alt="nft"
                 className={"nft-image"}/>
               }
-              <img src="/assets/images/stamp.svg" height="446" width="390" alt="decorative stamp frame" className="frame"/>
+              <img src="/assets/img/shape/stamp.svg" alt="decorative stamp frame" className="frame"/>
             </div>
             <figcaption>“{attributes["flavor"]}”</figcaption>
           </div>

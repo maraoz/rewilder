@@ -357,27 +357,24 @@ label {
 .header-button a:hover::before {
   opacity: 1;
 }
-.frame {
-  /* mix-blend-mode: overlay; */
+
+/* NFT image and stamp */
+.thumb img {
+  width: 390px;
+  height: 448px;
   -webkit-user-drag: none;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+}
+.thumb img.frame { 
+  position: absolute;
   opacity: .15;
 }
-
-.nft-image {
-  position: absolute;
+.thumb img.nft-image {
   padding: 1.5rem;
-  height: 446px;
-  width: 390px;
   z-index: 10;
-  -webkit-user-drag: none;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
 }
 
 .hero-v1-wrapper {
@@ -934,7 +931,7 @@ label {
 }
 
 .description-wrapper .nft .thumb {
-  margin: 1rem 0;
+  margin: 2rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1180,11 +1177,8 @@ svg {
   .description-area { padding: 0px; }
   
   /* Donation NFT img */
-  img.nft-image {
-    width: calc(100% - 3rem);
-    height: auto;
-    padding: 1rem;
-  }
+  .thumb img { width: 290px; height: 332px; }
+  .thumb img.nft-image { padding: 1rem; }
 
   /* Donation card header */
   .donation-info .donation-img {
