@@ -5,7 +5,9 @@
   "dependencies": {
     "@chainlink/contracts": "^0.2.1",
     "@chakra-ui/react": "^1.6.3",
+    "@emotion/cache": "^11.4.0",
     "@emotion/react": "^11",
+    "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
