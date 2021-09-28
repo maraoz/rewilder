@@ -8,8 +8,6 @@
 			var $this = $(this);
 
 			var finalDate = 1633996800000; // 12 Oct 2021 00:00:00 GMT
-			// TODO: dev, remove
-			finalDate = 1632797644244 + 1000*60*60;
 
 			const tick = function (event) {
 				const now = new Date().getTime();
@@ -26,12 +24,14 @@
 			const timerDone = () => {
 				done = true;
 				const ctaHTML = 
-				"<a href='https://app.rewilder.xyz/#' role='button'"+
-					"class='btn btn-theme'>"+
-					" Donate now! "
-				"</a>"+
+					"<a href='https://app.rewilder.xyz/#' role='button'"+
+						"class='btn btn-theme'>"+
+						"Donate now!"
+					"</a>";
+				const explainHTML = 
 				"<h4>Fundraising started Oct 12, 2021.</h4>";
 				$('#hero-main').html(ctaHTML);
+				$('#hero-main').after(explainHTML);
 			};
 
 			const countdown = $this.countdown(finalDate);

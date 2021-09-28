@@ -1524,7 +1524,6 @@ label {
 }
 .btn-theme {
   margin: 4rem 5rem;
-  --tw-shadow: 0 0 10px #000!important;
   font-size: 14px;
   font-family: "Airbnb Cereal App Bold";
   font-weight: bold;
@@ -1543,7 +1542,6 @@ a.btn-theme {
   transition: all .3s ease-in-out;
 }
 .btn-theme:hover {
-  color: #fff;
   opacity: 90%;
 }
 .btn-theme:hover::before {
