@@ -3,6 +3,7 @@ import SliderUnstyled from '@mui/core/SliderUnstyled';
 import { styled, alpha } from '@mui/system';
 import { useEthers, useEtherBalance } from "@usedapp/core";
 import { ethers } from 'ethers';
+import { getLatestPrice, calculateHectaresEstimate } from '../lib/priceUtils';
 
 import Button from "../components/Button";
 import InformationIcon from "../components/InformationIcon";
@@ -107,18 +108,20 @@ const RewilderSlider = styled(SliderUnstyled)(
 );
 
 function DonationControls({ amount, setAmount, tier, alreadyDonated, donateTx, requestDonationToWallet }) {
-  
+
   const { account } = useEthers();
   const modalContext = useContext(WalletModalContext);
   const [walletOpened, setWalletOpened] = useState(false);
   const etherBalance  = useEtherBalance(account);
   const networkIncorrect = !networkMatches();
-
   const ethToUSD = 3500;
-  const hectaresEstimation = amount*ethToUSD/8000;
+  const [hectaresEstimation, setHectaresEstimation] = useState(calculateHectaresEstimate(amount, ethToUSD));
   const insufficientBalance = amount > etherBalance/1e18;
   const clamp = (n, lower, upper) => Math.min(Math.max(n, lower), upper);
 
+  getLatestPrice().then((price) => {
+    setHectaresEstimation(calculateHectaresEstimate(amount, price));
+  })
 
   const donateButtonText = networkIncorrect?
     `Change wallet network to ${config.networkName}`:
@@ -130,7 +133,7 @@ function DonationControls({ amount, setAmount, tier, alreadyDonated, donateTx, r
           "Insufficient Balance":
           "Donate and mint your NFT";
 
-  
+
   const donateButtonLoadingText = !account?
     "Connecting Wallet":
     donateTx.status == 'Mining'?
@@ -151,7 +154,7 @@ function DonationControls({ amount, setAmount, tier, alreadyDonated, donateTx, r
   };
 
   useEffect(() => {
-    if (donateTx.status == 'Exception' || 
+    if (donateTx.status == 'Exception' ||
         donateTx.status == 'Mining') {
       setWalletOpened(false);
     }
@@ -164,7 +167,7 @@ function DonationControls({ amount, setAmount, tier, alreadyDonated, donateTx, r
       return modalContext.onOpen();
     }
     if (!amount) return;
-    
+
     const donationAmountWEI = ethers.utils.parseEther(amount.toString());
     console.log(`${account} is about to donate`, donationAmountWEI/1e18, "ETH");
     requestDonationToWallet({value: donationAmountWEI});
@@ -193,28 +196,28 @@ function DonationControls({ amount, setAmount, tier, alreadyDonated, donateTx, r
       value: TIER_MARKERS['sequoia'],
     },
   ];
-  
+
   return (<>
     <div className="donation-control">
       <div className="tree-group">
         <div className="single-tree" onClick={()=>{setMinimumFor('cypress')}}>
-          <img 
-            src={`assets/img/tree/tree-1-${tier=='cypress'?'green':'gray'}.png`} 
-            alt="Cypress tier" 
+          <img
+            src={`assets/img/tree/tree-1-${tier=='cypress'?'green':'gray'}.png`}
+            alt="Cypress tier"
             className="tree-img small-tree"/>
           <h5 className={tier=='cypress'?'active':''}>Cypress</h5>
         </div>
         <div className="single-tree" onClick={()=>{setMinimumFor('araucaria')}}>
-          <img 
-            src={`assets/img/tree/tree-2-${tier=='araucaria'?'green':'gray'}.png`} 
-            alt="Araucaria tier" 
+          <img
+            src={`assets/img/tree/tree-2-${tier=='araucaria'?'green':'gray'}.png`}
+            alt="Araucaria tier"
             className="tree-img medium-tree"/>
           <h5 className={tier=='araucaria'?'active':''}>Araucaria</h5>
         </div>
         <div className="single-tree" onClick={()=>{setMinimumFor('sequoia')}}>
-          <img 
-            src={`assets/img/tree/tree-3-${tier=='sequoia'?'green':'gray'}.png`} 
-            alt="sequoia tier" 
+          <img
+            src={`assets/img/tree/tree-3-${tier=='sequoia'?'green':'gray'}.png`}
+            alt="sequoia tier"
             className="tree-img large-tree"/>
           <h5 className={tier=='sequoia'?'active':''}>Sequoia</h5>
         </div>
@@ -243,7 +246,7 @@ function DonationControls({ amount, setAmount, tier, alreadyDonated, donateTx, r
       <div className="donating-value">
         <h4 className="view-amount">
           You are donating{" "}
-          <input 
+          <input
             className="selected-amount"
             type="number"
             value={amount}
@@ -252,14 +255,14 @@ function DonationControls({ amount, setAmount, tier, alreadyDonated, donateTx, r
             onChange={handleInputChange}
             />{" "} <img src="/assets/img/icon/eth.svg" height="16" width="16" alt="ETH" /> ETH</h4>
         <span>
-          We estimate this will help buy ~{hectaresEstimation.toFixed(2)} hectares. 
+          We estimate this will help buy ~{hectaresEstimation.toFixed(2)} hectares.
           <InformationIcon text={"This is our current best estimate, assuming we keep part of the raised funds in an endowment fund to pay for lifetime maintenance costs, and a preliminary survey of land purchase costs. Final numbers may change according to where we decide to buy land, but we'll do our best to keep the hectares/$ ratio high."}/>
         </span>
       </div>
     </div>
     <div className="hero-v1-btn">
-      <Button 
-        onClick={donate} 
+      <Button
+        onClick={donate}
         isLoading={walletOpened || donateTx.status=="Mining"}
         disabled={networkIncorrect || alreadyDonated || insufficientBalance}
         text={donateButtonText}
