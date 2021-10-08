@@ -38,15 +38,15 @@ async function verifyImplementationOnEtherscan(implAddress, constructorArguments
 
 async function main() {
   
-  let [_, wallet] = await ethers.getSigners();
-  const hardhatProvider = wallet.provider;
-
+  const hardhatProvider = ethers.provider;
+  await ethers.provider.getBlockNumber().then((blockNumber) => {
+    console.log("Current block number: " + blockNumber);
+  });
   const ledger = new LedgerSigner(hardhatProvider, "hid", process.env.LEDGER_DERIVATION_PATH);
   const address = await ledger.getAddress();
   const balance = await ledger.getBalance();
   console.log("ledger", address, balance/1e18);
 
-  wallet = wallet.address;
   if (process.env.REWILDER_MULTISIG && 
     ethers.utils.isAddress(process.env.REWILDER_MULTISIG)) {
     
