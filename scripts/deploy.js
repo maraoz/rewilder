@@ -1,6 +1,7 @@
 const {config, ethers, upgrades, network} = require("hardhat");
 const fs = require("fs");
 const path = require('path')
+const { LedgerSigner } = require("@ethersproject/hardware-wallets");
 
 const contractAddressFile = `${config.paths.artifacts}${path.sep}..${path.sep}addresses-${network.name}.json`
 
@@ -37,7 +38,14 @@ async function verifyImplementationOnEtherscan(implAddress, constructorArguments
 
 async function main() {
   
-  let [deployer, wallet] = await ethers.getSigners();
+  let [_, wallet] = await ethers.getSigners();
+  const hardhatProvider = wallet.provider;
+
+  const ledger = new LedgerSigner(hardhatProvider, "hid", process.env.LEDGER_DERIVATION_PATH);
+  const address = await ledger.getAddress();
+  const balance = await ledger.getBalance();
+  console.log("ledger", address, balance/1e18);
+
   wallet = wallet.address;
   if (process.env.REWILDER_MULTISIG && 
     ethers.utils.isAddress(process.env.REWILDER_MULTISIG)) {
@@ -49,26 +57,17 @@ async function main() {
   const addresses = {};
   addresses['wallet'] = wallet;
   
-  console.log("Deploying contracts with the account:", deployer.address);
+  console.log("Deploying contracts with the account:", address);
   console.log("Account balance:", 
-    (await deployer.getBalance()/1e18).toString(), 
+    (await ledger.getBalance()/1e18).toString(), 
     network.name, "ETH");
   
   addresses['network'] = network.name;
     
-  if (network.name == "localhost") {
-    // multicall (required by usedapp)
-    const MulticallContract = await hre.ethers.getContractFactory("Multicall");
-    const multicall = await MulticallContract.deploy();
-    await multicall.deployed();
-    addresses["Multicall"] = multicall.address;
-    console.log("Multicall deployed to:", multicall.address);
-  }
-  
   // NFT -- upgradeable
   console.log("Deploying upgradeable RewilderNFT...");
   const RewilderNFT = await ethers.getContractFactory("RewilderNFT");
-  const nft = await upgrades.deployProxy(RewilderNFT, { kind: "uups" });
+  const nft = await upgrades.deployProxy(RewilderNFT.connect(ledger), { kind: "uups" });
   await nft.deployed();
   console.log("RewilderNFT proxy deployed to:", nft.address);
   const nftImpl = await upgrades.erc1967.getImplementationAddress(nft.address);
@@ -81,7 +80,7 @@ async function main() {
   // donation campaign -- non-upgradeable
   console.log("Deploying RewilderDonationCampaign...");
   const RewilderDonationCampaign = await ethers.getContractFactory("RewilderDonationCampaign");
-  const campaign = await RewilderDonationCampaign.deploy(
+  const campaign = await RewilderDonationCampaign.connect(ledger).deploy(
     nft.address, wallet
   );
   await campaign.deployed();
@@ -91,7 +90,7 @@ async function main() {
 
   // transfer nft ownership to donation campaign
   console.log("Transferring NFT ownership to Campaign...");
-  await nft.transferOwnership(campaign.address);
+  await nft.connect(ledger).transferOwnership(campaign.address);
   
   
   // re-create contract address file if needed, and back up old one
