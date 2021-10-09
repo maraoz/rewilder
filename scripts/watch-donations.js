@@ -1,11 +1,15 @@
 const { ethers } = require("hardhat");
 const addresses = require("./lib/addresses");
 const indexDonation = require("./lib/index-donation");
+const config = require('../src/config');
 
 async function main() {
 
   if (!process.env.INDEXER_INFURA_ID) {
     throw new Error('Please set env variable $INDEXER_INFURA_ID with an infura app id');
+  }
+  if (network.name != config.networkName) {
+    throw new Error('hardhat network and config network mismatch');
   }
   const url = `https://${network.name}.infura.io/v3/${process.env.INDEXER_INFURA_ID}`;
   console.log('Connecting to', url);
