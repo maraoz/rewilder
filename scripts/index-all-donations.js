@@ -1,8 +1,8 @@
 const {ethers, network} = require("hardhat");
-
+const fs = require("fs");
 const processTransaction = require("./lib/process-transaction");
 const addresses = require("./lib/addresses");
-
+const journalFileName = "./journal.json";
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -13,19 +13,28 @@ async function main() {
     return;
   }
   let donationCampaignAddress = addresses.RewilderDonationCampaign;
-  console.log('Using donation address', donationCampaignAddress);
+  // console.log('Using donation address', donationCampaignAddress);
+  const journal = JSON.parse(fs.readFileSync(journalFileName));
+  // console.log('journal contains', Object.keys(journal).length, 'entries');
   let etherscan = new ethers.providers.EtherscanProvider(network.name, process.env.ETHERSCAN_KEY);
   let history = await etherscan.getHistory(donationCampaignAddress);
   
-  console.log('Found', history.length, 'transactions.');
+  // console.log('Found', history.length, 'transactions.');
   for(var tx of history){
     if (tx.to == donationCampaignAddress){
+      if (journal[tx.hash]) {
+        // console.log('journal entry found for', tx.hash, '... skipping.')
+        continue;
+      }
       console.log("indexing", tx.hash);
       await processTransaction(tx);
-      console.log("indexed", tx.hash, '- now waiting...')
+      journal[tx.hash] = new Date().getTime();
+      fs.writeFileSync(journalFileName, JSON.stringify(journal, null, 2));
+      console.log("indexed", tx.hash, '- now waiting...');
+
       await sleep(5000);
     } else {
-      console.log('skipping', tx.hash);
+      // console.log('ignoring', tx.hash);
     }
   }
 }

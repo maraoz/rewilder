@@ -57,3 +57,5 @@ out/
 build
 # contracts
 # artifacts/*
+
+journal.json
