@@ -23,6 +23,7 @@ config.DAppProviderConfig.multicallAddresses[config.chainId] = addressFor("Multi
 
 export const queryClient = new QueryClient();
 
+
 const MyApp = ({ Component, pageProps }) => {
 
   const { onOpen, isOpen, onClose } = useDisclosure();

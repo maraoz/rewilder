@@ -19,7 +19,8 @@
     "next": "^11.1.2",
     "react": "^17.0.2",
     "react-popper": "^2.2.5",
-    "react-query": "^3.21.1"
+    "react-query": "^3.21.1",
+    "web3": "^1.5.3"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
