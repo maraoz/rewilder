@@ -1521,6 +1521,13 @@ label {
   flex-direction: column;
   top: 50%;
 }
+.hero-main a h4 {
+  text-decoration: #2C422F;
+}
+
+.hero-main a h4:hover {
+  text-decoration: underline;
+}
 .btn-theme {
   margin: 4rem 5rem;
   font-size: 14px;
